@@ -283,7 +283,7 @@ for n = 1 :  totalTrials
     
     %%%%  show image
 
-        imagefile = fullfile('pictures', [objects{cuelist.cueidx( n)}, '.png']);; 
+        imagefile = fullfile('pictures', [objects{cuelist.objidx( n)}, '.png']);; 
         [img, ~, alpha] = imread(imagefile); 
 
         if ~isempty(alpha) && any(alpha(:) ~= 0)
@@ -429,7 +429,7 @@ for n = 1 :  totalTrials
 end  
   
 
-fclose( fid);
+% fclose( fid);
 
 WaitSecs( 5);
 
