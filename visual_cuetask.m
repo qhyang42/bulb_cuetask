@@ -11,10 +11,10 @@ end
 
 % for debug purpose
 % winsize = [10, 10, 800, 600];% chicken debug 
-winsize = [50, 50, 1600, 1200]; % desktop debug
+% winsize = [50, 50, 1600, 1200]; % desktop debug
 
 % full-scrren mode
-%  winsize = [];
+ winsize = [];
 
 % Background color: choose a number from 0 (black) to 255 (white)
 backgroundColor = 195;
@@ -322,7 +322,7 @@ for n = 1 :  nPractice
             % Check for key presses
             if keyIsDown
                 if keyCode(KbName('LeftArrow'))
-                    rsp = 1;
+%                     rsp = 1;
                     Screen('FillRect', w, boxcolorselect, leftBoxRect);
                     Screen('FillRect', w, boxcolor, rightBoxRect);
 
@@ -341,7 +341,7 @@ for n = 1 :  nPractice
                     break;
 
                 elseif keyCode(KbName('RightArrow'))
-                    rsp = 2;
+%                     rsp = 2;
                     Screen('FillRect', w, boxcolorselect, rightBoxRect);
                     Screen('FillRect', w, boxcolor, leftBoxRect);
 
@@ -375,7 +375,7 @@ for n = 1 :  nPractice
 %         end
 
         PsychHID( 'KbQueueStop');
-        responses{n} = rsp;
+%         responses{n} = rsp;
    
         PsychPortAudio('close'); % close audio port 
 
@@ -447,6 +447,10 @@ for n = 1 :  totalTrials
 
     % inter-trial interval
     itistart = GetSecs();
+    rsp = []; 
+
+    KbReleaseWait; 
+    
     while true
 
         [keyIsDown, ~, keyCode] = KbCheck; % check for correction

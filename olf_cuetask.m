@@ -11,10 +11,10 @@ end
 
 % for debug purpose
 % winsize = [10, 10, 800, 600];% chicken debug 
-winsize = [50, 50, 1600, 1200]; % desktop debug
+% winsize = [50, 50, 1600, 1200]; % desktop debug
 
 % full-scrren mode
-%  winsize = [];
+ winsize = [];
 
 % Background color: choose a number from 0 (black) to 255 (white)
 backgroundColor = 195;
