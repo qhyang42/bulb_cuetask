@@ -22,7 +22,7 @@ backgroundColor = 195;
 
 % Text color: choose a number from 0 (black) to 255 (white)
 textColor = 0;
-textSize = 44;
+textSize = 65;
 
 % minimal inter-trial interval, must be no smaller than response time out, in
 % seconds
@@ -157,7 +157,7 @@ DrawFormattedText( w, instructions{1}, 'center', 'center', textColor);
 %%% show demo choice box 
 
 boxcolor = [0.6, 0.6, 0.6, 0.3]; % half transparent grey
-boxsize = [100, 80];
+boxsize = [200, 100];
 leftboxx = rect(3) / 4 - boxsize(1) / 2 + 150;
 rightboxx = 3 * rect(3) / 4 - boxsize(1) / 2 - 150;
 boxY = rect(4) / 2 +200;
@@ -167,8 +167,8 @@ rightBoxRect = [rightboxx, boxY, rightboxx + boxsize(1), boxY + boxsize(2)];
 Screen('FillRect', w, boxcolor, leftBoxRect);
 Screen('FillRect', w, boxcolor, rightBoxRect);
 
-DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
 Screen('Flip', w);
 
@@ -290,7 +290,7 @@ for n = 1 :  nPractice
     
         boxcolor = [0.6, 0.6, 0.6, 0.3]; % half transparent grey 
         boxcolorselect = [0.6 ,0.7, 0.8, 0.5]; 
-        boxsize = [100, 80];  
+        boxsize = [200, 100];  
         leftboxx = rect(3) / 4 - boxsize(1) / 2 + 150; 
         rightboxx = 3 * rect(3) / 4 - boxsize(1) / 2 - 150;
         boxY = rect(4) / 2 +200;
@@ -302,11 +302,11 @@ for n = 1 :  nPractice
         
         trialtype = cuelist.trialtype(n); %%% todo make a list of counter balanced trial types 
         if trialtype == 1
-            DrawFormattedText(w, 'Yes', leftboxx + 20, boxY+50, [0 0 0]);
-            DrawFormattedText(w, 'No', rightboxx + 25, boxY+50, [0 0 0]);
+            DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
+            DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
         else
-            DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-            DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+            DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+            DrawFormattedText(w, 'Yes', rightboxx + 55, boxY+70, [0 0 0]);
 
         end
 
@@ -346,11 +346,11 @@ for n = 1 :  nPractice
                     Screen('FillRect', w, boxcolor, leftBoxRect);
 
                     if trialtype == 1
-                        DrawFormattedText(w, 'Yes', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'No', rightboxx + 25, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
-                        DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', rightboxx + 55, boxY+70, [0 0 0]);
 
                     end
 
@@ -555,7 +555,7 @@ for n = 1 :  totalTrials
     
         boxcolor = [0.6, 0.6, 0.6, 0.3]; % half transparent grey 
         boxcolorselect = [0.6 ,0.7, 0.8, 0.5]; 
-        boxsize = [100, 80];  
+        boxsize = [200, 100];  
         leftboxx = rect(3) / 4 - boxsize(1) / 2 + 150; 
         rightboxx = 3 * rect(3) / 4 - boxsize(1) / 2 - 150;
         boxY = rect(4) / 2 +200;
@@ -567,11 +567,11 @@ for n = 1 :  totalTrials
         
         trialtype = cuelist.trialtype(n); 
         if trialtype == 1
-            DrawFormattedText(w, 'Yes', leftboxx + 20, boxY+50, [0 0 0]);
-            DrawFormattedText(w, 'No', rightboxx + 25, boxY+50, [0 0 0]);
+            DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
+            DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
         else
-            DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-            DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+            DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+            DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
         end
 
@@ -593,11 +593,11 @@ for n = 1 :  totalTrials
                     Screen('FillRect', w, boxcolor, rightBoxRect);
 
                     if trialtype == 1
-                        DrawFormattedText(w, 'Yes', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'No', rightboxx + 25, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
-                        DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
                     end
 
@@ -612,11 +612,11 @@ for n = 1 :  totalTrials
                     Screen('FillRect', w, boxcolor, leftBoxRect);
 
                     if trialtype == 1
-                        DrawFormattedText(w, 'Yes', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'No', rightboxx + 25, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
-                        DrawFormattedText(w, 'No', leftboxx + 20, boxY+50, [0 0 0]);
-                        DrawFormattedText(w, 'Yes', rightboxx + 20, boxY+50, [0 0 0]);
+                        DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
+                        DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
                     end
 
