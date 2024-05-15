@@ -103,6 +103,18 @@ end
 % Keyboard setup
 [kbInd, dev_names] = GetKeyboardIndices;
 
+kbInd_usb = [];
+kbInd_pro = [];
+for k = 1 : length( dev_names)
+    if ~isempty(strfind( dev_names{ k}, 'Pico'))
+        kbInd_usb = kbInd( k);
+    elseif ~isempty( strfind( dev_names{ k}, 'Apple Internal'))
+        kbInd_pro = kbInd( k);
+    else
+        % do nothing
+    end
+end
+
 %% make sure randomly gen erated iti have means of ms 
 avg_iti = round( avg_iti*1000);
 dyn_iti = round( max_iti - min_iti) * 1000;
@@ -204,7 +216,7 @@ for n = 1 : Npractice
     % inter-trial interval
     WaitSecs( iti(n)-2);
     
-    Screen( 'FillRect', w, [0, 1, 0], blk_crs_rect);
+    Screen( 'FillRect', w, [0, 0.6, 0], blk_crs_rect);
     Screen( 'Flip', w);
     
     WaitSecs(2); 
@@ -259,8 +271,8 @@ for n = 1 : Npractice
     
     %%% button response 
     
-        boxcolor = [0.6, 0.6, 0.6, 0.3]; % half transparent grey 
-        boxcolorselect = [0.6 ,0.7, 0.8, 0.5]; 
+        boxcolor = [0.7, 0.7, 0.7, 0.2]; % half transparent grey 
+        boxcolorselect = [0.6 ,0.7, 0.8, 0.4]; 
         boxsize = [200, 100];  
         leftboxx = rect(3) / 4 - boxsize(1) / 2 + 150; 
         rightboxx = 3 * rect(3) / 4 - boxsize(1) / 2 - 150;
@@ -275,9 +287,15 @@ for n = 1 : Npractice
         if trialtype == 1
             DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
             DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
+
+            Screen('FrameRect',w,[0 .6 0],leftBoxRect,5);
+            Screen('FrameRect',w,[1 0 0],rightBoxRect,5);
         else
             DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
             DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
+
+            Screen('FrameRect',w,[0 .6 0],rightBoxRect,5);
+            Screen('FrameRect',w,[1 0 0],leftBoxRect,5);
 
         end
 
@@ -289,18 +307,23 @@ for n = 1 : Npractice
 
         while true % main response loop
 
-            [keyIsDown, ~, keyCode] = KbCheck;
+%             [keyIsDown, ~, keyCode] = KbCheck;
+            [ keyIsDown, ~, kbb] = KbCheck(kbInd_usb);
             % Check for key presses
             if keyIsDown
-                if keyCode(KbName('LeftArrow'))
+                if kbb(30)
                     rsp = 1;
                     Screen('FillRect', w, boxcolorselect, leftBoxRect);
                     Screen('FillRect', w, boxcolor, rightBoxRect);
 
                     if trialtype == 1
+                        Screen('FrameRect',w,[0 .6 0],leftBoxRect,5);
+
                         DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
+                        Screen('FrameRect',w,[1 0 0],leftBoxRect,5);
+
                         DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
@@ -311,15 +334,17 @@ for n = 1 : Npractice
                     WaitSecs(1);
                     break;
 
-                elseif keyCode(KbName('RightArrow'))
+                elseif kbb(31)
                     rsp = 2;
                     Screen('FillRect', w, boxcolorselect, rightBoxRect);
                     Screen('FillRect', w, boxcolor, leftBoxRect);
 
                     if trialtype == 1
+                        Screen('FrameRect',w,[1 0 0],rightBoxRect,5);
                         DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
+                        Screen('FrameRect',w,[0 .6 0],rightBoxRect,5);
                         DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
@@ -421,17 +446,19 @@ for n = 1 :  totalTrials
         itistart = GetSecs();
         while true
 
-        [keyIsDown, ~, keyCode] = KbCheck; % check for correction 
+        [keyIsDown, ~, kbb] = KbCheck; % check for correction 
         if keyIsDown
-            if keyCode(KbName('LeftArrow'))
+            if kbb(30)
                 rsp = 1;
-            elseif keyCode(KbName('RightArrow'))
+            elseif kbb(31)
                 rsp = 2;
             end
             rsp_corrected = 1;
-
-            responses{n-1} = rsp; 
-            responses_corrected(n-1) = rsp_corrected; 
+            
+            if n >1
+                responses{n-1} = rsp;
+                responses_corrected(n-1) = rsp_corrected;
+            end 
         end
         
             currentTime = GetSecs();
@@ -444,7 +471,7 @@ for n = 1 :  totalTrials
    
 
 
-    Screen( 'FillRect', w, [0, 1, 0], blk_crs_rect);
+    Screen( 'FillRect', w, [0, 0.6, 0], blk_crs_rect);
     Screen( 'Flip', w);
     WaitSecs(2); 
    
@@ -511,8 +538,8 @@ for n = 1 :  totalTrials
     
     %%% button response 
     
-        boxcolor = [0.6, 0.6, 0.6, 0.3]; % half transparent grey 
-        boxcolorselect = [0.6 ,0.7, 0.8, 0.5]; 
+        boxcolor = [0.7, 0.7, 0.7, 0.2]; % half transparent grey 
+        boxcolorselect = [0.6 ,0.7, 0.8, 0.4]; 
         boxsize = [200, 100];  
         leftboxx = rect(3) / 4 - boxsize(1) / 2 + 150; 
         rightboxx = 3 * rect(3) / 4 - boxsize(1) / 2 - 150;
@@ -527,9 +554,15 @@ for n = 1 :  totalTrials
         if trialtype == 1
             DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
             DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
+
+            Screen('FrameRect',w,[0 .6 0],leftBoxRect,5);
+            Screen('FrameRect',w,[1 0 0],rightBoxRect,5);
         else
             DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
             DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
+
+            Screen('FrameRect',w,[0 .6 0],rightBoxRect,5);
+            Screen('FrameRect',w,[1 0 0],leftBoxRect,5);
 
         end
 
@@ -542,18 +575,22 @@ for n = 1 :  totalTrials
         rsp = []; 
         while true % main response loop
 
-            [keyIsDown, ~, keyCode] = KbCheck;
+            [ keyIsDown, ~, kbb] = KbCheck(kbInd_usb);
             % Check for key presses
             if keyIsDown
-                if keyCode(KbName('LeftArrow'))
+                if kbb(30)
                     rsp = 1;
                     Screen('FillRect', w, boxcolorselect, leftBoxRect);
                     Screen('FillRect', w, boxcolor, rightBoxRect);
 
                     if trialtype == 1
+                        Screen('FrameRect',w,[0 .6 0],leftBoxRect,5);
+
                         DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
+                        Screen('FrameRect',w,[1 0 0],leftBoxRect,5);
+
                         DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
@@ -564,15 +601,19 @@ for n = 1 :  totalTrials
                     WaitSecs(1);
                     break;
 
-                elseif keyCode(KbName('RightArrow'))
+                elseif kbb(31)
                     rsp = 2;
                     Screen('FillRect', w, boxcolorselect, rightBoxRect);
                     Screen('FillRect', w, boxcolor, leftBoxRect);
 
                     if trialtype == 1
+                        Screen('FrameRect',w,[1 0 0],rightBoxRect,5);
+
                         DrawFormattedText(w, 'Yes', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
+                        Screen('FrameRect',w,[0 .6 0],rightBoxRect,5);
+
                         DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
