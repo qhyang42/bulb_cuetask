@@ -11,10 +11,10 @@ end
 
 % for debug purpose
 % winsize = [10, 10, 800, 600];% chicken debug 
-% winsize = [50, 50, 1600, 1200]; % desktop debug
+winsize = [50, 50, 1600, 1200]; % desktop debug
 
 % full-scrren mode
- winsize = [];
+%  winsize = [];
 
 % Background color: choose a number from 0 (black) to 255 (white)
 backgroundColor = 195;
@@ -215,7 +215,9 @@ for n = 1 :  nPractice
     % inter-trial interval 
     WaitSecs( iti(n)-2);
 
+
     Screen( 'FillRect', w, [0, 0.6, 0], blk_crs_rect); % green cross for the last 2s 
+
     Screen( 'Flip', w);
     WaitSecs( 2);
 
@@ -352,6 +354,7 @@ for n = 1 :  nPractice
                         DrawFormattedText(w, 'No', rightboxx + 55, boxY+70, [0 0 0]);
                     else
                         Screen('FrameRect',w,[1 0 0],leftBoxRect,5);
+
                         DrawFormattedText(w, 'No', leftboxx + 50, boxY+70, [0 0 0]);
                         DrawFormattedText(w, 'Yes', rightboxx + 50, boxY+70, [0 0 0]);
 
@@ -499,7 +502,9 @@ for n = 1 :  totalTrials
     end
 
 
+
     Screen( 'FillRect', w, [0, 0.6, 0], blk_crs_rect); % green cross for the last 2s 
+
     Screen( 'Flip', w);
     WaitSecs( 2);
 
