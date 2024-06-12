@@ -155,12 +155,12 @@ blk_crs_dur = 2;
 
 %%%%% on chicken: olfactometer right, daq left 
 %%%%% on ostrich: daq1 olfactometer2
-% [daq, err] = TwoDaqsIndex() ;
+[daq, err] = TwoDaqsIndex() ;
 
 %% set up Olfactometer
 
-% OlfFlowControl(daq(2),0.3,0.3);
-% OlfOpenLines(1,daq(2));
+OlfFlowControl(daq(2),0.3,0.3);
+OlfOpenLines(1,daq(2));
 
 %% Instructions
 DrawFormattedText( w, instructions{1}, 'center', 'center', textColor);
@@ -396,9 +396,9 @@ pos_cross = imageCenter( fixCr, W, H);
 % end
 
 %%%% wait for 5 ttl pulses before hitting space to start 
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
 
 
 
@@ -490,9 +490,9 @@ for n = 1 :  totalTrials
     play_sound(word_cue_wavfile);
 
     % single pulse to indicate cue onset 
-%     DaqDOut( daq(1), daq_dport, 1);
-%     WaitSecs( pulse_dur);
-%     DaqDOut( daq(1), daq_dport, 0);
+    DaqDOut( daq(1), daq_dport, 1);
+    WaitSecs( pulse_dur);
+    DaqDOut( daq(1), daq_dport, 0);
 
     WaitSecs((length(wY)/wFREQ)+1);
     
@@ -510,7 +510,7 @@ for n = 1 :  totalTrials
     Screen( 'Flip', w);
     
      % olfactometer 
-%     OlfOpenLines([cuelist.odor(n)],daq(2)); 
+    OlfOpenLines([cuelist.odor(n)],daq(2)); 
     
     WaitSecs( countdown_dur);
     
@@ -525,16 +525,17 @@ for n = 1 :  totalTrials
     play_sound(cdwav); 
     DrawFormattedText( w, 'SNIFF', 'center', 'center', textColor);
     [~, sti_onset(n)] = Screen( 'Flip', w);
+    
     %single pulse for sniff 
-%     DaqDOut( daq(1), daq_dport, 1);
-%     WaitSecs(pulse_dur_sniff); 
-%     DaqDOut( daq(1), daq_dport, 0);
+    DaqDOut( daq(1), daq_dport, 1);
+    WaitSecs(pulse_dur_sniff); 
+    DaqDOut( daq(1), daq_dport, 0);
     
     WaitSecs( countdown_dur);
 
     % close olfactometer
       WaitSecs(2); % TODO check how long the olfactometer need to stay open 
-%      OlfOpenLines(1,daq(2));
+     OlfOpenLines(1,daq(2));
     
     %%% button response 
     

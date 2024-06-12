@@ -11,10 +11,10 @@ end
 
 % for debug purpose
 % winsize = [10, 10, 800, 600];% chicken debug 
-% winsize = [50, 50, 1600, 1200]; % desktop debug
+winsize = [50, 50, 1600, 1200]; % desktop debug
 
 % full-scrren mode
- winsize = [];
+%  winsize = [];
 
 % Background color: choose a number from 0 (black) to 255 (white)
 backgroundColor = 195;
@@ -78,7 +78,7 @@ instructions = instructions(:, 6);
 % cuelist_name = fullfile(subID, ['session', num2str(sessionID)], ['cuelist_sess', num2str(sessionID), '_run', num2str(runID), '.mat']); 
 cuelist_name = 'cuelist_visual.mat'; 
 cuelist = load( fullfile( savedir, cuelist_name));
-cuelist = cuelist.cuelist; % cue odor   
+cuelist = cuelist.cuelist;  
 
 objects = cuelist.objects;  
 totalTrials = length( cuelist.cueidx);
@@ -155,7 +155,7 @@ blk_crs_dur = 2;
 
 %%%%% on chicken: olfactometer right, daq left 
 %%%%% on ostrich: daq1 olfactometer2
-% [daq, err] = TwoDaqsIndex() ;
+[daq, err] = TwoDaqsIndex() ;
 
 %% set up Olfactometer
 
@@ -429,9 +429,9 @@ pos_cross = imageCenter( fixCr, W, H);
 % end
 
 %%%% wait for 5 ttl pulses before hitting space to start 
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
-% DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
+DaqDOut( daq(1), daq_dport, 1); WaitSecs( pulse_dur); DaqDOut( daq(1), daq_dport, 0); WaitSecs( inter_pulse_dur);
 
 
 
@@ -517,7 +517,7 @@ for n = 1 :  totalTrials
 
     Screen( 'Flip', w);
     
-    vidx = randi(2, 1); % pick voice 
+%     vidx = randi(2, 1); % pick voice 
 
     % read cue
     word_cue_wavfile = fullfile('cue_picture', [objects{cuelist.cueidx( n)}, '.mp3']  ); 
@@ -525,9 +525,9 @@ for n = 1 :  totalTrials
      play_sound(word_cue_wavfile);
 
     % single pulse to indicate cue onset 
-%     DaqDOut( daq(1), daq_dport, 1);
-%     WaitSecs( pulse_dur);
-%     DaqDOut( daq(1), daq_dport, 0);
+    DaqDOut( daq(1), daq_dport, 1);
+    WaitSecs( pulse_dur);
+    DaqDOut( daq(1), daq_dport, 0);
 
     WaitSecs((length(wY)/wFREQ)+1);
     
@@ -536,7 +536,7 @@ for n = 1 :  totalTrials
     Screen( 'FillRect', w, blk_crs_color, blk_crs_rect);
     %     DrawFormattedText( w, sprintf(instructions{5}), W/2-160, 4*H/5-30, textColor);
     Screen( 'Flip', w);
-    waittime = 3 + (rand(1)-1)*2;
+    waittime = 3 + (rand(1)-1); % 2-4s 
     WaitSecs(waittime); 
     
     %%%%  show image
@@ -569,8 +569,13 @@ for n = 1 :  totalTrials
 
         Screen('DrawTexture', w, imgTexture, [], imgRect);
         Screen('Flip', w);
+        
+        %%% single pulse for image display 
+        DaqDOut( daq(1), daq_dport, 1);
+        WaitSecs(pulse_dur_sniff);
+        DaqDOut( daq(1), daq_dport, 0);
 
-        WaitSecs(2); 
+        WaitSecs(2);
 
 
 
